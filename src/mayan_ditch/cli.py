@@ -16,8 +16,8 @@ Why does this file exist, and why not put this in __main__?
 """
 import os
 
-import typer
 import requests
+import typer
 
 app = typer.Typer()
 
