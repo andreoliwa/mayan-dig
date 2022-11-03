@@ -1,0 +1,7 @@
+### Download document
+#GET {{mayan_url}}/api/v4/documents/{{document_id}}/files/{{document_id}}/download/
+#Authorization: Basic {{username}} {{password}}
+
+### Document metadata
+GET {{mayan_url}}/api/v4/documents/{{document_id}}/metadata
+Authorization: Basic {{username}} {{password}}

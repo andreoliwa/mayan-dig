@@ -1,0 +1,9 @@
+### List cabinets
+GET {{mayan_url}}/api/v4/cabinets/
+Accept: application/json
+Authorization: Basic {{username}} {{password}}
+
+### List documents in cabinets
+GET {{mayan_url}}/api/v4/cabinets/{{cabinet_id}}/documents/
+Accept: application/json
+Authorization: Basic {{username}} {{password}}

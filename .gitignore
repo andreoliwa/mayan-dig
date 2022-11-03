@@ -72,3 +72,6 @@ docs/_build
 
 # Mypy Cache
 .mypy_cache/
+
+# JetBrains HTTP client
+http-client.private.env.json

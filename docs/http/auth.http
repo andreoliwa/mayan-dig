@@ -1,0 +1,9 @@
+### Get auth token
+#POST {{mayan_url}}/api/v4/auth/token/obtain/
+#Content-Type: application/json
+#Accept: application/json
+#
+#{
+#  "username": "{{username}}",
+#  "password": "{{password}}"
+#}
