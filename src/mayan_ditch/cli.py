@@ -14,10 +14,19 @@ Why does this file exist, and why not put this in __main__?
 
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
-import click
+import os
+
+import typer
+import requests
+
+app = typer.Typer()
+
+session = requests.Session()
+session.auth = os.environ['MAYAN_ADMIN_USER'], os.environ['MAYAN_ADMIN_PASSWORD']
+session.headers.update({'Accept': 'application/json'})
 
 
-@click.command()
-@click.argument('names', nargs=-1)
-def main(names):
-    click.echo(repr(names))
+@app.command()
+def cabinet():
+    response = session.get('http://mayan:8001/api/v4/cabinets/')
+    print(response.text)

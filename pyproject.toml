@@ -1,10 +1,24 @@
-[build-system]
-requires = [
-    "setuptools>=30.3.0",
-    "wheel",
-]
-
 [tool.black]
 line-length = 140
 target-version = ['py36']
 skip-string-normalization = true
+
+[tool.poetry]
+name = "mayan_ditch"
+version = "0.1.0"
+description = ""
+authors = ["W. Augusto Andreoli <andreoliwa@gmail.com>"]
+
+[tool.poetry.scripts]
+mayan-ditch = "mayan_ditch.cli:app"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = "*"
+requests = "*"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
