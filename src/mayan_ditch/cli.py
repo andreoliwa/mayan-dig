@@ -14,7 +14,9 @@ Why does this file exist, and why not put this in __main__?
 
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
+import json
 import os
+from typing import Optional
 
 import requests
 import typer
@@ -25,8 +27,31 @@ session = requests.Session()
 session.auth = os.environ["MAYAN_ADMIN_USER"], os.environ["MAYAN_ADMIN_PASSWORD"]
 session.headers.update({"Accept": "application/json"})
 
+MAYAN_URL = os.environ["MAYAN_URL"]
+
 
 @app.command()
-def cabinet():
-    response = session.get("http://mayan:8001/api/v4/cabinets/")
-    print(response.text)
+def cabinets(paths: Optional[list[str]] = typer.Option(None, "--path", "-p")):
+    url = f"{MAYAN_URL}/api/v4/cabinets/"
+    selected = []
+    while True:
+        response = session.get(url)
+        data = response.json()
+        url = data["next"]
+        if not url:
+            break
+
+        results = data["results"]
+        for obj in results:
+            # We don't need the hierarchy for now
+            obj.pop("children")
+
+            if not paths:
+                selected.append(obj)
+                continue
+
+            for one_path in paths:
+                if one_path.lower() in obj["full_path"].lower():
+                    selected.append(obj)
+
+    typer.echo(json.dumps(selected))
