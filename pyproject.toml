@@ -1,7 +1,6 @@
 [tool.black]
-line-length = 140
-target-version = ['py36']
-skip-string-normalization = true
+line-length = 120
+target-version = ['py310']
 
 [tool.poetry]
 name = "mayan_ditch"

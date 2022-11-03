@@ -22,11 +22,11 @@ import typer
 app = typer.Typer()
 
 session = requests.Session()
-session.auth = os.environ['MAYAN_ADMIN_USER'], os.environ['MAYAN_ADMIN_PASSWORD']
-session.headers.update({'Accept': 'application/json'})
+session.auth = os.environ["MAYAN_ADMIN_USER"], os.environ["MAYAN_ADMIN_PASSWORD"]
+session.headers.update({"Accept": "application/json"})
 
 
 @app.command()
 def cabinet():
-    response = session.get('http://mayan:8001/api/v4/cabinets/')
+    response = session.get("http://mayan:8001/api/v4/cabinets/")
     print(response.text)
