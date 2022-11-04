@@ -1,5 +1,8 @@
 name: build
-on: [push, pull_request]
+on:
+  # FIXME[AA]:
+  #  - push
+  - pull_request
 jobs:
   test:
     name: ${{ matrix.name }}
@@ -14,6 +17,7 @@ jobs:
             toxpython: "python3.10"
             tox_env: "check"
             os: "ubuntu-latest"
+    # FIXME[AA]:
     #          - name: "docs"
     #            python: "3.10"
     #            toxpython: "python3.10"
