@@ -1,0 +1,12 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:base"],
+  // https://docs.renovatebot.com/presets-default/#automergeall
+  automerge: true,
+  // https://docs.renovatebot.com/presets-default/#automergebranch
+  automergeType: "branch",
+  // https://docs.renovatebot.com/modules/manager/pre-commit/
+  "pre-commit": {
+    enabled: true,
+  },
+}
