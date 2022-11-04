@@ -6,7 +6,8 @@ coverage:
   status:
     project:
       default:
-        target: auto
+        #        target: auto
+        target: 10% # TODO:
         threshold: 60% # TODO:
         base: auto
         paths:
