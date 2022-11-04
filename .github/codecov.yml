@@ -1,3 +1,4 @@
+# https://docs.codecov.com/docs/codecov-yaml
 # https://docs.codecov.com/docs/commit-status
 # https://docs.codecov.com/docs/codecov-yaml#validate-your-repository-yaml
 # Validate with:
@@ -6,9 +7,8 @@ coverage:
   status:
     project:
       default:
-        #        target: auto
-        target: 10% # TODO:
+        target: 0% # TODO: auto
         threshold: 60% # TODO:
-        base: auto
+        base: 0% # TODO: auto
         paths:
           - "src"
