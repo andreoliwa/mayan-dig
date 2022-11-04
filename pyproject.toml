@@ -17,6 +17,8 @@ typer = "*"
 requests = "*"
 
 [tool.poetry.dev-dependencies]
+pytest = "*"
+pytest-env = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
