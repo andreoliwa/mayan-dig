@@ -12,11 +12,13 @@ authors = ["W. Augusto Andreoli <andreoliwa@gmail.com>"]
 mayan-dig = "mayan_dig.cli:app"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 typer = "*"
 requests = "*"
 
 [tool.poetry.dev-dependencies]
+pytest = "*"
+pytest-env = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
