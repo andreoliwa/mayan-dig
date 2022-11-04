@@ -1,0 +1,13 @@
+# https://docs.codecov.com/docs/commit-status
+# https://docs.codecov.com/docs/codecov-yaml#validate-your-repository-yaml
+# Validate with:
+# curl --data-binary @.github/codecov.yml https://codecov.io/validate
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 60% # TODO:
+        base: auto
+        paths:
+          - "src"
