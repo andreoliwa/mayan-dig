@@ -9,6 +9,13 @@ coverage:
       default:
         target: 0% # TODO: auto
         threshold: 60% # TODO:
-        base: 0% # TODO: auto
+        base: auto
+        paths:
+          - "src"
+    patch:
+      default:
+        target: 0% # TODO: auto
+        threshold: 60% # TODO:
+        base: auto
         paths:
           - "src"
