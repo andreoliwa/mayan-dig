@@ -13,10 +13,10 @@ mayan-dig = "mayan_dig.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-typer = "*"
+typer = { version = "*", extras = ["all"] }
 requests = "*"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "*"
 pytest-env = "*"
 

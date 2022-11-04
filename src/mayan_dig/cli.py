@@ -14,12 +14,12 @@ Why does this file exist, and why not put this in __main__?
 
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
-import json
 import os
 from typing import Optional
 
 import requests
 import typer
+from rich import print
 
 app = typer.Typer()
 
@@ -31,7 +31,7 @@ MAYAN_URL = os.environ["MAYAN_URL"]
 
 
 @app.command()
-def cabinets(paths: Optional[list[str]] = typer.Option(None, "--path", "-p")):
+def cabinets(full_paths: Optional[list[str]] = typer.Option(None, "--full-path", "-f")):
     url = f"{MAYAN_URL}/api/v4/cabinets/"
     selected = []
     while True:
@@ -46,12 +46,13 @@ def cabinets(paths: Optional[list[str]] = typer.Option(None, "--path", "-p")):
             # We don't need the hierarchy for now
             obj.pop("children")
 
-            if not paths:
+            if not full_paths:
                 selected.append(obj)
                 continue
 
-            for one_path in paths:
-                if one_path.lower() in obj["full_path"].lower():
+            for path in full_paths:
+                if path.lower() in obj["full_path"].lower():
                     selected.append(obj)
 
-    typer.echo(json.dumps(selected))
+    for obj in selected:
+        print(f"[green]Cabinet:[/green] {obj['full_path']}")
