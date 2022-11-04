@@ -3,13 +3,13 @@ line-length = 120
 target-version = ['py310']
 
 [tool.poetry]
-name = "mayan_ditch"
+name = "mayan_dig"
 version = "0.1.0"
 description = ""
 authors = ["W. Augusto Andreoli <andreoliwa@gmail.com>"]
 
 [tool.poetry.scripts]
-mayan-ditch = "mayan_ditch.cli:app"
+mayan-dig = "mayan_dig.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.10"

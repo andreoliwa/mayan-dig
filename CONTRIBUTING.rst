@@ -8,7 +8,7 @@ little bit helps, and credit will always be given.
 Bug reports
 ===========
 
-When `reporting a bug <https://github.com/andreoliwa/python-mayan-ditch/issues>`_ please include:
+When `reporting a bug <https://github.com/andreoliwa/mayan-dig/issues>`_ please include:
 
     * Your operating system name and version.
     * Any details about your local setup that might be helpful in troubleshooting.
@@ -17,14 +17,14 @@ When `reporting a bug <https://github.com/andreoliwa/python-mayan-ditch/issues>`
 Documentation improvements
 ==========================
 
-Mayan Ditch could always use more documentation, whether as part of the
-official Mayan Ditch docs, in docstrings, or even on the web in blog posts,
+Mayan Dig could always use more documentation, whether as part of the
+official Mayan Dig docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Feature requests and feedback
 =============================
 
-The best way to send feedback is to file an issue at https://github.com/andreoliwa/python-mayan-ditch/issues.
+The best way to send feedback is to file an issue at https://github.com/andreoliwa/mayan-dig/issues.
 
 If you are proposing a feature:
 
@@ -35,13 +35,13 @@ If you are proposing a feature:
 Development
 ===========
 
-To set up `python-mayan-ditch` for local development:
+To set up `mayan-dig` for local development:
 
-1. Fork `python-mayan-ditch <https://github.com/andreoliwa/python-mayan-ditch>`_
+1. Fork `mayan-dig <https://github.com/andreoliwa/mayan-dig>`_
    (look for the "Fork" button).
 2. Clone your fork locally::
 
-    git clone git@github.com:YOURGITHUBNAME/python-mayan-ditch.git
+    git clone git@github.com:YOURGITHUBNAME/mayan-dig.git
 
 3. Create a branch for local development::
 

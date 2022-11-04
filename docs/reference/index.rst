@@ -4,4 +4,4 @@ Reference
 .. toctree::
     :glob:
 
-    mayan_ditch*
+    mayan_dig*

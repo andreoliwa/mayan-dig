@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use Mayan Ditch in a project::
+To use Mayan Dig in a project::
 
-	import mayan_ditch
+	import mayan_dig

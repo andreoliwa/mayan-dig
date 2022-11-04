@@ -5,14 +5,14 @@
 # automatically for any template). To use it:
 #
 #    pip install cookiepatcher
-#    cookiepatcher gh:ionelmc/cookiecutter-pylibrary python-mayan-ditch
+#    cookiepatcher gh:ionelmc/cookiecutter-pylibrary mayan-dig
 #
 # See:
 #    https://pypi.org/project/cookiepatcher
 #
 # Alternatively, you can run:
 #
-#    cookiecutter --overwrite-if-exists --config-file=python-mayan-ditch/.cookiecutterrc gh:ionelmc/cookiecutter-pylibrary
+#    cookiecutter --overwrite-if-exists --config-file=mayan-dig/.cookiecutterrc gh:ionelmc/cookiecutter-pylibrary
 
 default_context:
 
@@ -21,29 +21,29 @@ default_context:
     allow_tests_inside_package: 'no'
     appveyor:                  'no'
     c_extension_function:      'longest'
-    c_extension_module:        '_mayan_ditch'
+    c_extension_module:        '_mayan_dig'
     c_extension_optional:      'no'
     c_extension_support:       'no'
     c_extension_test_pypi:     'no'
     c_extension_test_pypi_username: 'andreoliwa'
     codacy:                    'no'
-    codacy_projectid:          '[Get ID from https://app.codacy.com/gh/andreoliwa/python-mayan-ditch/settings]'
+    codacy_projectid:          '[Get ID from https://app.codacy.com/gh/andreoliwa/mayan-dig/settings]'
     codeclimate:               'no'
     codecov:                   'yes'
     command_line_interface:    'click'
-    command_line_interface_bin_name: 'mayan-ditch'
+    command_line_interface_bin_name: 'mayan-dig'
     coveralls:                 'no'
-    distribution_name:         'mayan-ditch'
+    distribution_name:         'mayan-dig'
     email:                     'andreoliwa@gmail.com'
     full_name:                 'W. Augusto Andreoli'
     github_actions:            'yes'
     legacy_python:             'no'
     license:                   'MIT license'
     linter:                    'flake8'
-    package_name:              'mayan_ditch'
+    package_name:              'mayan_dig'
     pre_commit:                'yes'
     pre_commit_formatter:      'black'
-    project_name:              'Mayan Ditch'
+    project_name:              'Mayan Dig'
     project_short_description: 'Dig files from Mayan cabinets'
     pypi_badge:                'yes'
     pypi_disable_upload:       'no'
@@ -51,14 +51,14 @@ default_context:
     repo_hosting:              'github.com'
     repo_hosting_domain:       'github.com'
     repo_main_branch:          'master'
-    repo_name:                 'python-mayan-ditch'
+    repo_name:                 'mayan-dig'
     repo_username:             'andreoliwa'
     requiresio:                'no'
     scrutinizer:               'no'
     setup_py_uses_setuptools_scm: 'no'
     setup_py_uses_test_runner: 'no'
     sphinx_docs:               'yes'
-    sphinx_docs_hosting:       'https://python-mayan-ditch.readthedocs.io/'
+    sphinx_docs_hosting:       'https://mayan-dig.readthedocs.io/'
     sphinx_doctest:            'no'
     sphinx_theme:              'sphinx-rtd-theme'
     test_matrix_configurator:  'yes'

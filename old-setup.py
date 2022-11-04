@@ -19,7 +19,7 @@ def read(*names, **kwargs):
 
 
 setup(
-    name="mayan-ditch",
+    name="mayan-dig",
     version="0.0.0",
     license="MIT",
     description="Dig files from Mayan cabinets",
@@ -29,7 +29,7 @@ setup(
     ),
     author="W. Augusto Andreoli",
     author_email="andreoliwa@gmail.com",
-    url="https://github.com/andreoliwa/python-mayan-ditch",
+    url="https://github.com/andreoliwa/mayan-dig",
     packages=find_packages("src"),
     package_dir={"": "src"},
     py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
@@ -60,9 +60,9 @@ setup(
         "Topic :: Utilities",
     ],
     project_urls={
-        "Documentation": "https://python-mayan-ditch.readthedocs.io/",
-        "Changelog": "https://python-mayan-ditch.readthedocs.io/en/latest/changelog.html",
-        "Issue Tracker": "https://github.com/andreoliwa/python-mayan-ditch/issues",
+        "Documentation": "https://mayan-dig.readthedocs.io/",
+        "Changelog": "https://mayan-dig.readthedocs.io/en/latest/changelog.html",
+        "Issue Tracker": "https://github.com/andreoliwa/mayan-dig/issues",
     },
     keywords=[
         # eg: 'keyword1', 'keyword2', 'keyword3',
@@ -79,7 +79,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "mayan-ditch = mayan_ditch.cli:main",
+            "mayan-dig = mayan_dig.cli:main",
         ]
     },
 )

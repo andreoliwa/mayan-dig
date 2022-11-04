@@ -1,5 +1,5 @@
 """
-Entrypoint module, in case you use `python -mmayan_ditch`.
+Entrypoint module, in case you use `python -mmayan_dig`.
 
 
 Why does this file exist, and why __main__? For more info, read:
@@ -8,7 +8,7 @@ Why does this file exist, and why __main__? For more info, read:
 - https://docs.python.org/2/using/cmdline.html#cmdoption-m
 - https://docs.python.org/3/using/cmdline.html#cmdoption-m
 """
-from mayan_ditch.cli import app
+from mayan_dig.cli import app
 
 if __name__ == "__main__":
     app()
