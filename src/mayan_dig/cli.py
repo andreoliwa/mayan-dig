@@ -57,10 +57,9 @@ def cabinets(
         resolve_path=True,
     ),
     delete_dir: bool = typer.Option(False, help="Delete download dir before starting, with a prompt"),
+    overwrite: bool = typer.Option(False, help="Overwrite existing files"),
     verbose: int = typer.Option(0, "--verbose", "-v", count=True),
 ):
-    # TODO: feat: option to skip the file if it already exists
-
     # Display documents if a download dir was chosen
     if download_dir:
         documents = True
@@ -123,14 +122,19 @@ def cabinets(
                 mapping[pair[0]] = pair[1]
 
             templated_file_path = template.safe_substitute(mapping).replace(":", "-")
+            skip = False
             if download_dir:
                 downloaded_file_path = download_dir / PROJECT_NAME / templated_file_path
-                dry_run_message = ""
+                message = "[green]Downloading document as[/green]"
+
+                if downloaded_file_path.exists() and not overwrite:
+                    message = "[red]Skipping existing document at[/red]"
+                    skip = True
             else:
                 downloaded_file_path = Path(f"<{DOWNLOAD_DIR}>") / PROJECT_NAME / templated_file_path
-                dry_run_message = "would be"
+                message = "[yellow]Document would be downloaded as[/yellow]"
 
-            rich.print(f"  Document {dry_run_message}downloaded as [blue]{downloaded_file_path}[/blue]")
+            rich.print(f"  {message} [blue]{downloaded_file_path}[/blue]")
             rich_mapping = []
             for key, value in mapping.items():
                 rich_mapping.append(f"    [magenta]{key}:[/magenta] {value}")
@@ -141,7 +145,7 @@ def cabinets(
             if verbose >= 2:
                 rich.print(document_dict)
 
-            if download_dir:
+            if download_dir and not skip:
                 response = session.get(document.download_url)
                 try:
                     downloaded_file_path.parent.mkdir(parents=True, exist_ok=True)
