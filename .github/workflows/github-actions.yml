@@ -76,7 +76,7 @@ jobs:
             tox_env: "py311-cover,codecov"
             os: "macos-latest"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v2
