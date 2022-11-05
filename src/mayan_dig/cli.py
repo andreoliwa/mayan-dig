@@ -15,6 +15,7 @@ Why does this file exist, and why not put this in __main__?
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
 import os
+import shutil
 import string
 from pathlib import Path
 from typing import Optional
@@ -55,13 +56,21 @@ def cabinets(
         writable=True,
         resolve_path=True,
     ),
+    delete_dir: bool = typer.Option(False, help="Delete download dir before starting, with a prompt"),
     verbose: int = typer.Option(0, "--verbose", "-v", count=True),
 ):
-    # TODO: feat: option to remove download dir before starting, with a prompt
     # TODO: feat: option to skip the file if it already exists
+
     # Display documents if a download dir was chosen
     if download_dir:
         documents = True
+
+        # Delete dir if it exists
+        mayan_dig_dir = download_dir / PROJECT_NAME
+        if delete_dir and mayan_dig_dir.exists():
+            confirmation = typer.confirm(f"Are you sure you want to delete it {mayan_dig_dir}?")
+            if confirmation:
+                shutil.rmtree(mayan_dig_dir)
 
     selected_cabinets = []
     for cabinet_dict in fetch_items_from(mayan_url_from_path("cabinets"), verbose):
