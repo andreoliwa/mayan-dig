@@ -1,9 +1,7 @@
 from typer.testing import CliRunner
 
+from mayan_dig import remove_control_characters
 from mayan_dig.cli import app
-
-# https://typer.tiangolo.com/tutorial/commands/help/#rich-markdown-and-markup
-app.rich_markup_mode = None
 
 
 def test_main():
@@ -14,5 +12,5 @@ def test_main():
         "Usage: cabinets [OPTIONS] [FULL_PATHS]...",
         "full_paths      [FULL_PATHS]...  Partial path name to search",
     ]:
-        assert line in result.output
+        assert line in remove_control_characters(result.output)
     assert result.exit_code == 0
