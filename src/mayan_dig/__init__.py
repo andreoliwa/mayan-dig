@@ -1,17 +1,18 @@
 __version__ = "0.0.0"
 
-import os
 import unicodedata
 from dataclasses import dataclass
 
 import requests
 import rich
 
-session = requests.Session()
-session.auth = os.environ["MAYAN_ADMIN_USER"], os.environ["MAYAN_ADMIN_PASSWORD"]
-session.headers.update({"Accept": "application/json"})
+from mayan_dig.settings import MAYAN_DIG_PASSWORD
+from mayan_dig.settings import MAYAN_DIG_URL
+from mayan_dig.settings import MAYAN_DIG_USER
 
-MAYAN_URL = os.environ["MAYAN_URL"]
+session = requests.Session()
+session.auth = MAYAN_DIG_USER, MAYAN_DIG_PASSWORD
+session.headers.update({"Accept": "application/json"})
 
 
 @dataclass
@@ -42,7 +43,7 @@ class Document:
 
 
 def mayan_url_from_path(url_path: str) -> str:
-    return f"{MAYAN_URL}/api/v4/{url_path}/"
+    return f"{MAYAN_DIG_URL}/api/v4/{url_path}/"
 
 
 def fetch_items_from(url: str, verbose=False):

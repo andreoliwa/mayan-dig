@@ -1,0 +1,5 @@
+DOC_TYPE = "doc_type"
+DOC_NAME = "doc_name"
+DOC_CREATED = "doc_created"
+META_PREFIX = "meta_"
+DOWNLOAD_DIR = "download-dir"

@@ -24,6 +24,11 @@ from mayan_dig import Document
 from mayan_dig import fetch_items_from
 from mayan_dig import mayan_url_from_path
 from mayan_dig import session
+from mayan_dig.constants import DOC_CREATED
+from mayan_dig.constants import DOC_NAME
+from mayan_dig.constants import DOC_TYPE
+from mayan_dig.constants import DOWNLOAD_DIR
+from mayan_dig.constants import META_PREFIX
 
 app = typer.Typer()
 
@@ -34,7 +39,7 @@ def cabinets(
     documents: bool = typer.Option(False, "--docs", "-o", help="Display documents in cabinets"),
     download_dir: Path = typer.Option(
         None,
-        "--download-dir",
+        f"--{DOWNLOAD_DIR}",
         "-d",
         help="Download directory for the documents; if none, no documents will be downloaded",
         exists=True,
@@ -78,15 +83,15 @@ def cabinets(
                 meta_dict.pop("document")
                 key = meta_dict["metadata_type"]["name"]
                 value = meta_dict["value"]
-                meta.add(f"{key}: {value}")
+                meta.add(f"[magenta]{META_PREFIX}{key}:[/magenta] {value}")
                 if verbose >= 2:
                     rich.print(meta_dict)
 
-            rich_meta = f" [magenta]Metadata:[/magenta] {' '.join(sorted(meta))}" if meta else ""
+            rich_meta = " ".join(sorted(meta)) if meta else ""
             rich.print(
-                f"  [yellow]Document:[/yellow] [magenta]Type:[/magenta] {document.doc_type}"
-                f" [magenta]Name:[/magenta] {document.label}"
-                f" [magenta]Created:[/magenta] {document.created_at}{rich_meta}"
+                f"  [yellow]Document:[/yellow] [magenta]{DOC_TYPE}:[/magenta] {document.doc_type}"
+                f" [magenta]{DOC_NAME}:[/magenta] {document.label}"
+                f" [magenta]{DOC_CREATED}:[/magenta] {document.created_at} {rich_meta}"
             )
             if verbose:
                 rich.print(document)
@@ -97,7 +102,7 @@ def cabinets(
                 downloaded_file_path = download_dir / document.filename
                 message = "Downloading to"
             else:
-                downloaded_file_path = f"<dir>/{document.filename}"
+                downloaded_file_path = f"<{DOWNLOAD_DIR}>/{document.filename}"
                 message = "Would be downloaded as"
             rich.print(f"    {message} [blue]{downloaded_file_path}[/blue]")
 
