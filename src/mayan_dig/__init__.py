@@ -28,8 +28,8 @@ class Document:
     def from_json(cls, data: dict):
         label = data["label"]
         filename = data["file_latest"]["filename"]
-        if label == filename:
-            filename = ""
+        if label != filename:
+            raise ValueError(f"Mismatch! {label=} {filename=}")
         return cls(
             id=data["id"],
             doc_type=data["document_type"]["label"],
@@ -39,10 +39,6 @@ class Document:
             created_at=data["datetime_created"],
             description=data["description"],
         )
-
-    @property
-    def label_or_filename(self) -> str:
-        return self.label or self.filename
 
 
 def mayan_url_from_path(url_path: str) -> str:

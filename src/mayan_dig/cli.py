@@ -23,6 +23,7 @@ import typer
 from mayan_dig import Document
 from mayan_dig import fetch_items_from
 from mayan_dig import mayan_url_from_path
+from mayan_dig import session
 
 app = typer.Typer()
 
@@ -30,6 +31,7 @@ app = typer.Typer()
 @app.command()
 def cabinets(
     full_paths: Optional[list[str]] = typer.Argument(None, help="Partial path name to search"),
+    documents: bool = typer.Option(False, "--docs", "-o", help="Display documents in cabinets"),
     download_dir: Path = typer.Option(
         None,
         "--download-dir",
@@ -43,10 +45,9 @@ def cabinets(
     ),
     verbose: int = typer.Option(0, "--verbose", "-v", count=True),
 ):
+    # Display documents if a download dir was chosen
     if download_dir:
-        rich.print(f"[yellow]Documents will be downloaded in[/yellow] [blue]{download_dir}[/blue]")
-    else:
-        rich.print("[yellow]No documents will be downloaded[/yellow]")
+        documents = True
 
     selected_cabinets = []
     for cabinet_dict in fetch_items_from(mayan_url_from_path("cabinets"), verbose):
@@ -67,7 +68,7 @@ def cabinets(
         if verbose:
             rich.print(cabinet_dict)
 
-        if not download_dir:
+        if not documents:
             continue
 
         for document_dict in fetch_items_from(cabinet_dict["documents_url"], verbose):
@@ -75,20 +76,35 @@ def cabinets(
             meta = set()
             for meta_dict in fetch_items_from(mayan_url_from_path(f"documents/{document.id}/metadata"), verbose):
                 meta_dict.pop("document")
-                key = meta_dict["metadata_type"]["label"]
+                key = meta_dict["metadata_type"]["name"]
                 value = meta_dict["value"]
-                meta.add(f"{key}-{value}")
+                meta.add(f"{key}: {value}")
                 if verbose >= 2:
                     rich.print(meta_dict)
 
             rich_meta = f" [magenta]Metadata:[/magenta] {' '.join(sorted(meta))}" if meta else ""
             rich.print(
-                f"  [cyan]Document:[/cyan] [magenta]Type:[/magenta] {document.doc_type}"
-                f" [magenta]Name:[/magenta] {document.label_or_filename}"
+                f"  [yellow]Document:[/yellow] [magenta]Type:[/magenta] {document.doc_type}"
+                f" [magenta]Name:[/magenta] {document.label}"
                 f" [magenta]Created:[/magenta] {document.created_at}{rich_meta}"
             )
             if verbose:
                 rich.print(document)
             if verbose >= 2:
                 rich.print(document_dict)
-            # FIXME: actually download the document and save the file
+
+            if download_dir:
+                downloaded_file_path = download_dir / document.filename
+                message = "Downloading to"
+            else:
+                downloaded_file_path = f"<dir>/{document.filename}"
+                message = "Would be downloaded as"
+            rich.print(f"    {message} [blue]{downloaded_file_path}[/blue]")
+
+            if download_dir:
+                response = session.get(document.download_url)
+                try:
+                    # TODO: set modified and created dates
+                    downloaded_file_path.write_bytes(response.content)
+                except Exception as err:
+                    rich.print(err)
