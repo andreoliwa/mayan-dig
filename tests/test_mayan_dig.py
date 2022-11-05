@@ -7,5 +7,5 @@ def test_main():
     runner = CliRunner()
     result = runner.invoke(app, ["--help"])
 
-    assert "Usage: cabinets [OPTIONS]\n" in result.output
+    assert "Usage: cabinets [OPTIONS] [FULL_PATHS]..." in result.output
     assert result.exit_code == 0
