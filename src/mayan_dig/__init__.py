@@ -1,6 +1,7 @@
 __version__ = "0.0.0"
 
 import os
+import unicodedata
 from dataclasses import dataclass
 
 import requests
@@ -58,3 +59,8 @@ def fetch_items_from(url: str, verbose=False):
         url = data["next"]
         if not url:
             break
+
+
+def remove_control_characters(text: str) -> str:
+    """Adapted from https://stackoverflow.com/a/19016117."""
+    return "".join(char for char in text if unicodedata.category(char)[0] != "C")
