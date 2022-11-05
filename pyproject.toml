@@ -15,6 +15,7 @@ mayan-dig = "mayan_dig.cli:app"
 python = "^3.9"
 typer = { version = "*", extras = ["all"] }
 requests = "*"
+pendulum = "*"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"

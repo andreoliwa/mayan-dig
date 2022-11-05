@@ -14,6 +14,7 @@ Why does this file exist, and why not put this in __main__?
 
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
+import os
 import string
 from pathlib import Path
 from typing import Optional
@@ -56,7 +57,7 @@ def cabinets(
     ),
     verbose: int = typer.Option(0, "--verbose", "-v", count=True),
 ):
-    # TODO: feat: option to remove download dir before starting
+    # TODO: feat: option to remove download dir before starting, with a prompt
     # TODO: feat: option to skip the file if it already exists
     # Display documents if a download dir was chosen
     if download_dir:
@@ -105,7 +106,9 @@ def cabinets(
                 DOC_NAME: document.name,
                 DOC_STEM: document.stem,
                 DOC_SUFFIX: document.suffix,
-                DOC_CREATED: document.created_at,
+                # For template purposes, use only the date part of the creation time.
+                # Hardcoded for now, but it can become a setting if needed
+                DOC_CREATED: document.created_at.date().isoformat(),
             }
             for pair in sorted(meta):
                 mapping[pair[0]] = pair[1]
@@ -132,8 +135,11 @@ def cabinets(
             if download_dir:
                 response = session.get(document.download_url)
                 try:
-                    # TODO: feat: set modified and created dates on downloaded files
                     downloaded_file_path.parent.mkdir(parents=True, exist_ok=True)
                     downloaded_file_path.write_bytes(response.content)
+
+                    # Set created and modified dates on the downloaded file
+                    mtime = document.created_at.int_timestamp
+                    os.utime(downloaded_file_path, (mtime, mtime))
                 except Exception as err:
                     rich.print(err)

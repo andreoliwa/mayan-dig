@@ -4,6 +4,7 @@ import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
+import pendulum
 import requests
 import rich
 
@@ -22,7 +23,7 @@ class Document:
     doc_type: str
     download_url: str
     name: str
-    created_at: str
+    created_at: pendulum.DateTime
     description: str
 
     def __post_init__(self):
@@ -39,7 +40,7 @@ class Document:
             doc_type=data["document_type"]["label"],
             download_url=data["file_latest"]["download_url"],
             name=label,
-            created_at=data["datetime_created"],
+            created_at=pendulum.parse(data["datetime_created"]),
             description=data["description"],
         )
 
