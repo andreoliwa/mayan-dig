@@ -14,6 +14,7 @@ Why does this file exist, and why not put this in __main__?
 
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
+import string
 from pathlib import Path
 from typing import Optional
 
@@ -24,6 +25,7 @@ from mayan_dig import Document
 from mayan_dig import fetch_items_from
 from mayan_dig import mayan_url_from_path
 from mayan_dig import session
+from mayan_dig.constants import DOC_CABINET
 from mayan_dig.constants import DOC_CREATED
 from mayan_dig.constants import DOC_NAME
 from mayan_dig.constants import DOC_STEM
@@ -31,6 +33,8 @@ from mayan_dig.constants import DOC_SUFFIX
 from mayan_dig.constants import DOC_TYPE
 from mayan_dig.constants import DOWNLOAD_DIR
 from mayan_dig.constants import META_PREFIX
+from mayan_dig.constants import PROJECT_NAME
+from mayan_dig.settings import MAYAN_DIG_PATH_TEMPLATE
 
 app = typer.Typer()
 
@@ -52,6 +56,8 @@ def cabinets(
     ),
     verbose: int = typer.Option(0, "--verbose", "-v", count=True),
 ):
+    # TODO: feat: option to remove download dir before starting
+    # TODO: feat: option to skip the file if it already exists
     # Display documents if a download dir was chosen
     if download_dir:
         documents = True
@@ -70,8 +76,12 @@ def cabinets(
                 selected_cabinets.append(cabinet_dict)
                 continue
 
+    template = string.Template(MAYAN_DIG_PATH_TEMPLATE)
+    rich.print(f"Using this path template: [bright_green]{MAYAN_DIG_PATH_TEMPLATE}[/bright_green]")
+
     for cabinet_dict in selected_cabinets:
-        rich.print(f"[green]Cabinet:[/green] {cabinet_dict['full_path']}")
+        cabinet = cabinet_dict["full_path"]
+        rich.print(f"[magenta]{DOC_CABINET}:[/magenta] {cabinet}")
         if verbose:
             rich.print(cabinet_dict)
 
@@ -83,37 +93,47 @@ def cabinets(
             meta = set()
             for meta_dict in fetch_items_from(mayan_url_from_path(f"documents/{document.id}/metadata"), verbose):
                 meta_dict.pop("document")
-                key = meta_dict["metadata_type"]["name"]
+                key = META_PREFIX + meta_dict["metadata_type"]["name"]
                 value = meta_dict["value"]
-                meta.add(f"[magenta]{META_PREFIX}{key}:[/magenta] {value}")
+                meta.add((key.lower(), value))
                 if verbose >= 2:
                     rich.print(meta_dict)
 
-            rich_meta = " ".join(sorted(meta)) if meta else ""
-            rich.print(
-                f"  [yellow]Document:[/yellow] [magenta]{DOC_TYPE}:[/magenta] {document.doc_type}"
-                f" [magenta]{DOC_NAME}:[/magenta] {document.name}"
-                f" [magenta]{DOC_STEM}:[/magenta] {document.stem}"
-                f" [magenta]{DOC_SUFFIX}:[/magenta] {document.suffix}"
-                f" [magenta]{DOC_CREATED}:[/magenta] {document.created_at} {rich_meta}"
-            )
+            mapping = {
+                DOC_CABINET: cabinet,
+                DOC_TYPE: document.doc_type,
+                DOC_NAME: document.name,
+                DOC_STEM: document.stem,
+                DOC_SUFFIX: document.suffix,
+                DOC_CREATED: document.created_at,
+            }
+            for pair in sorted(meta):
+                mapping[pair[0]] = pair[1]
+
+            templated_file_path = template.safe_substitute(mapping).replace(":", "-")
+            if download_dir:
+                downloaded_file_path = download_dir / PROJECT_NAME / templated_file_path
+                dry_run_message = ""
+            else:
+                downloaded_file_path = Path(f"<{DOWNLOAD_DIR}>") / PROJECT_NAME / templated_file_path
+                dry_run_message = "would be"
+
+            rich.print(f"  Document {dry_run_message}downloaded as [blue]{downloaded_file_path}[/blue]")
+            rich_mapping = []
+            for key, value in mapping.items():
+                rich_mapping.append(f"    [magenta]{key}:[/magenta] {value}")
+            rich.print("\n".join(rich_mapping))
+
             if verbose:
                 rich.print(document)
             if verbose >= 2:
                 rich.print(document_dict)
 
             if download_dir:
-                downloaded_file_path = download_dir / document.name
-                message = "Downloading to"
-            else:
-                downloaded_file_path = f"<{DOWNLOAD_DIR}>/{document.name}"
-                message = "Would be downloaded as"
-            rich.print(f"    {message} [blue]{downloaded_file_path}[/blue]")
-
-            if download_dir:
                 response = session.get(document.download_url)
                 try:
-                    # TODO: set modified and created dates
+                    # TODO: feat: set modified and created dates on downloaded files
+                    downloaded_file_path.parent.mkdir(parents=True, exist_ok=True)
                     downloaded_file_path.write_bytes(response.content)
                 except Exception as err:
                     rich.print(err)

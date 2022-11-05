@@ -7,15 +7,15 @@ coverage:
   status:
     project:
       default:
-        target: 0% # TODO: auto
-        threshold: 60% # TODO:
+        target: 0% # TODO: test: revert to "auto" once the project has more coverage
+        threshold: 60% # TODO: test: review once the project has more coverage
         base: auto
         paths:
           - "src"
     patch:
       default:
-        target: 0% # TODO: auto
-        threshold: 60% # TODO:
+        target: 0% # TODO: test: revert to "auto" once the project has more coverage
+        threshold: 60% # TODO: test: review once the project has more coverage
         base: auto
         paths:
           - "src"
