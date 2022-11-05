@@ -31,8 +31,14 @@ MAYAN_URL = os.environ["MAYAN_URL"]
 
 
 @app.command()
-def cabinets(full_paths: Optional[list[str]] = typer.Option(None, "--full-path", "-f")):
+def cabinets(
+    full_paths: Optional[list[str]] = typer.Argument(None, help="Partial path name to search"),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose"),
+):
     url = f"{MAYAN_URL}/api/v4/cabinets/"
+    if verbose:
+        print(f"[blue]Fetching all cabinets from[/blue] [yellow]{url}[/yellow]")
+
     selected = []
     while True:
         response = session.get(url)
@@ -56,3 +62,5 @@ def cabinets(full_paths: Optional[list[str]] = typer.Option(None, "--full-path",
 
     for obj in selected:
         print(f"[green]Cabinet:[/green] {obj['full_path']}")
+        if verbose:
+            print(obj)
