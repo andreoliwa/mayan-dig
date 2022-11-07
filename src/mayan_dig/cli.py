@@ -89,7 +89,8 @@ def cabinets(
     rich.print(f"Using this path template: [bright_green]{MAYAN_DIG_PATH_TEMPLATE}[/bright_green]")
 
     for cabinet_dict in selected_cabinets:
-        cabinet = cabinet_dict["full_path"]
+        # Remove spaces near the slash, otherwise they are added to the directories
+        cabinet = str(cabinet_dict["full_path"]).replace(" / ", "/")
         rich.print(f"[magenta]{DOC_CABINET}:[/magenta] {cabinet}")
         if verbose:
             rich.print(cabinet_dict)
