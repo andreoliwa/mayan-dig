@@ -14,6 +14,7 @@ Why does this file exist, and why not put this in __main__?
 
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
+
 import os
 import shutil
 import string
@@ -88,10 +89,11 @@ def cabinets(
     template = string.Template(MAYAN_DIG_PATH_TEMPLATE)
     rich.print(f"Using this path template: [bright_green]{MAYAN_DIG_PATH_TEMPLATE}[/bright_green]")
 
-    for cabinet_dict in selected_cabinets:
+    document_count = 0
+    for cabinet_index, cabinet_dict in enumerate(selected_cabinets):
         # Remove spaces near the slash, otherwise they are added to the directories
         cabinet = str(cabinet_dict["full_path"]).replace(" / ", "/")
-        rich.print(f"[magenta]{DOC_CABINET}:[/magenta] {cabinet}")
+        rich.print(f"[magenta]{DOC_CABINET} #{cabinet_index+1}:[/magenta] {cabinet}")
         if verbose:
             rich.print(cabinet_dict)
 
@@ -135,7 +137,8 @@ def cabinets(
                 downloaded_file_path = Path(f"<{DOWNLOAD_DIR}>") / PROJECT_NAME / templated_file_path
                 message = "[yellow]Document would be downloaded as[/yellow]"
 
-            rich.print(f"  {message} [blue]{downloaded_file_path}[/blue]")
+            document_count += 1
+            rich.print(f"  #{document_count} {message} [blue]{downloaded_file_path}[/blue]")
             rich_mapping = []
             for key, value in mapping.items():
                 rich_mapping.append(f"    [magenta]{key}:[/magenta] {value}")
