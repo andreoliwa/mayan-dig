@@ -14,8 +14,8 @@ repos:
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
-        stages: [commit]
-  - repo: https://github.com/timothycrosley/isort
+        stages: [pre-commit]
+  - repo: https://github.com/PyCQA/isort
     rev: 6.0.1
     hooks:
       - id: isort
