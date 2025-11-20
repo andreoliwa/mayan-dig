@@ -16,7 +16,7 @@ repos:
       - id: prettier
         stages: [commit]
   - repo: https://github.com/timothycrosley/isort
-    rev: 6.0.1
+    rev: 6.1.0
     hooks:
       - id: isort
   - repo: https://github.com/psf/black
