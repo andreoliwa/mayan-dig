@@ -5,7 +5,7 @@
 exclude: '^(\.tox|ci/templates|\.bumpversion\.cfg)(/|$)'
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -14,17 +14,17 @@ repos:
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
-        stages: [commit]
-  - repo: https://github.com/timothycrosley/isort
-    rev: 6.0.1
+        stages: [pre-commit]
+  - repo: https://github.com/PyCQA/isort
+    rev: 9.0.1
     hooks:
       - id: isort
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 26.5.1
     hooks:
       - id: black
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.8.3
+    rev: v4.18.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
